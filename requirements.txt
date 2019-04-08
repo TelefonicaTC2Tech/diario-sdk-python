@@ -1,0 +1,2 @@
+sdklib==1.10.3
+PySocks==1.6.8
