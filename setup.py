@@ -5,16 +5,18 @@ with open("README.md", "r") as fh:
 
 EXCLUDE_FROM_PACKAGES = []
 
+install_requires = ['sdklib==1.10.3', 'PySocks']
+
 setuptools.setup(
     name='diario',
-    version='0.1.2',
+    version='0.1.8',
     author='ElevenPaths',
     author_email='innovationlab@11paths.com',
     description='DIARIO SDK',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://diario.e-paths.com/index.html',
-    install_requires=['sdklib==1.10.3', 'PySocks'],
+    install_requires=install_requires,
     keywords=['sdk', 'api', 'diario'],
     classifiers=[
         'Intended Audience :: Developers',

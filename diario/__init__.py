@@ -1,17 +1,19 @@
+from sdklib.shortcuts import disable_warnings
+from sdklib.http.response import Api11PathsResponse
+from sdklib.http.renderers import MultiPartRenderer
+from sdklib.http.authorization import X11PathsAuthentication
+from sdklib.http import HttpSdk
+import os.path
+import uuid
+
 name = "diario"
 
-import os.path
-
-from sdklib.http import HttpSdk
-from sdklib.http.authorization import X11PathsAuthentication
-from sdklib.http.renderers import MultiPartRenderer
-from sdklib.http.response import Api11PathsResponse
-
-from sdklib.shortcuts import disable_warnings
 disable_warnings()
 
 __all__ = ('Diario',)
 
+HOST = 'https://diario-elevenlabs.e-paths.com'
+PORT = 443
 
 class _Route():
     """This class is just a simple storage type for route constants
@@ -20,6 +22,7 @@ class _Route():
     BASE_URL = "/api/" + VERSION + '/'
 
     UPLOAD = BASE_URL + 'upload'
+    TAGS = BASE_URL + 'tags'
     ANONYMOUS_UPLOAD = '/anonymous-upload'
     VALIDATE = "/validate"
     MACRO = "/macro"
@@ -42,6 +45,7 @@ class _Route():
     PARAM_DOCUMENT_TYPE = "documentType"
     PARAM_EMAIL = "email"
     PARAM_DESCRIPTION = "description"
+    PARAM_TAGS = "tags"
 
 
 class DocumentType():
@@ -52,10 +56,9 @@ class DocumentType():
 
 
 class Diario(HttpSdk):
-
     response_class = Api11PathsResponse
 
-    def __init__(self, app_id, secret_key, host, port):
+    def __init__(self, app_id, secret_key, host=HOST, port=PORT):
         """Initialize the DIARIO SDK with provided user information.
         :param app_id: User appId to be used
         :param secret_key: User secretKey to be used
@@ -69,11 +72,12 @@ class Diario(HttpSdk):
 
         self.app_id = app_id
         self.secret_key = secret_key
-        self.authentication_instances += (X11PathsAuthentication(self.app_id, self.secret_key),)
+        self.authentication_instances += (
+            X11PathsAuthentication(self.app_id, self.secret_key),)
 
     def upload(self, file_path):
         file_content = open(file_path, 'rb').read()
-        file_name = os.path.basename(file_path)
+        file_name = uuid.uuid4().hex
         return self.post(url_path=_Route.UPLOAD, files={_Route.PARAM_FILE: (file_name, file_content)},
                          renderers=MultiPartRenderer())
 
@@ -94,10 +98,9 @@ class Diario(HttpSdk):
         return self.get(url_path=_Route.BASE_URL + DocumentType.OFFICE + _Route.MACRO,
                         query_params={_Route.PARAM_HASH: document_hash})
 
-
     def __anonymous_upload(self, document_hash, zip_file_path, document_type):
         zip_file = open(zip_file_path, 'rb').read()
-        zip_file_name = os.path.basename(zip_file_path)
+        zip_file_name = uuid.uuid4().hex
         return self.post(url_path=_Route.BASE_URL + document_type + _Route.ANONYMOUS_UPLOAD,
                          body_params={_Route.PARAM_HASH: document_hash},
                          files={_Route.PARAM_FILE: (zip_file_name, zip_file)},
@@ -119,3 +122,9 @@ class Diario(HttpSdk):
                              _Route.PARAM_DESCRIPTION: description
                          })
 
+    def tags(self, hash, tags):
+        return self.post(url_path=_Route.TAGS,
+                         body_params={
+                             _Route.PARAM_TAGS: tags,
+                             _Route.PARAM_HASH: hash
+                         })

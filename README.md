@@ -28,6 +28,9 @@ DIARIO bridges a natural gap that antiviruses do not usually match. DIARIO is no
 	api = Diario("APP_ID_HERE", "SECRET_KEY_HERE")
 ```
 
+'host' and 'port' default parameters are set to diario-elevenlabs.e-paths.com and 443.
+
+
 * Call to DIARIO Server to do searches, upload and analyze documents, ...
 ```
 	response = api.get_pdf_prediction('23203f9264161714cdb8d2f474b9b641e6a735f8cea4098c40a3cab87439d749')
