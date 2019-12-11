@@ -33,13 +33,13 @@ DIARIO bridges a natural gap that antiviruses do not usually match. DIARIO is no
 
 * Call to DIARIO Server to do searches, upload and analyze documents, ...
 ```
-	response = api.get_pdf_prediction('23203f9264161714cdb8d2f474b9b641e6a735f8cea4098c40a3cab87439d749')
+	response = api.search('23203f9264161714cdb8d2f474b9b641e6a735f8cea4098c40a3cab87439d749')
 ```
 
 * After every API call, get DIARIO response data and errors and handle them.
 ```
-	response_data = response.get_data()
-	response_error = response.get_error()
+	response_data = response.data
+	response_error = response.error
 ```
 
 #### REST API specification ####

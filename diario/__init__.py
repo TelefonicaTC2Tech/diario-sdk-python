@@ -21,6 +21,7 @@ class _Route():
     VERSION = "0.1"
     BASE_URL = "/api/" + VERSION + '/'
 
+    SEARCH = BASE_URL + 'search'
     UPLOAD = BASE_URL + 'upload'
     TAGS = BASE_URL + 'tags'
     ANONYMOUS_UPLOAD = '/anonymous-upload'
@@ -81,14 +82,8 @@ class Diario(HttpSdk):
         return self.post(url_path=_Route.UPLOAD, files={_Route.PARAM_FILE: (file_name, file_content)},
                          renderers=MultiPartRenderer())
 
-    def __get_info(self, document_type, document_hash):
-        return self.get(url_path=_Route.BASE_URL + document_type, query_params={_Route.PARAM_HASH: document_hash})
-
-    def get_pdf_info(self, document_hash):
-        return self.__get_info(DocumentType.PDF, document_hash)
-
-    def get_office_info(self, document_hash):
-        return self.__get_info(DocumentType.OFFICE, document_hash)
+    def search(self, document_hash):
+        return self.get(url_path=_Route.SEARCH, query_params={_Route.PARAM_HASH: document_hash})
 
     def get_javascript_info(self, document_hash):
         return self.get(url_path=_Route.BASE_URL + DocumentType.PDF + _Route.JAVASCRIPT,
