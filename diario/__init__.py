@@ -12,7 +12,7 @@ disable_warnings()
 
 __all__ = ('Diario',)
 
-HOST = 'https://diario-elevenlabs.e-paths.com'
+HOST = 'https://diario.elevenpaths.com'
 PORT = 443
 
 class _Route():
