@@ -15,7 +15,7 @@ Prerequisites
 * Python 3 or 2.7+
 
 
-* A valid account in DIARIO (https://diario.e-paths.com/index.html) in order to get a **APP_ID** and **SECRET_KEY** keys (Registration is FREE).
+* A valid account in DIARIO (https://diario.elevenpaths.com) in order to get a **APP_ID** and **SECRET_KEY** keys (Registration is FREE).
 
 
 Installation
@@ -58,4 +58,4 @@ Minimal usage
 REST API specification
 ======================
 
-* Rest API documentation (https://diario.e-paths.com/api-specification.html).
+* Rest API documentation (https://diario.elevenpaths.com/dashboard/apispecification/index).
