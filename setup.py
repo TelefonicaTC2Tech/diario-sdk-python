@@ -9,7 +9,7 @@ install_requires = ['sdklib==1.10.3', 'PySocks']
 
 setuptools.setup(
     name='diario',
-    version='0.1.9',
+    version='0.2.1',
     author='ElevenPaths',
     author_email='innovationlab@11paths.com',
     description='DIARIO SDK',

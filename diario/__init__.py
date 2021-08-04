@@ -47,6 +47,7 @@ class _Route():
     PARAM_EMAIL = "email"
     PARAM_DESCRIPTION = "description"
     PARAM_TAGS = "tags"
+    PARAM_PASSWORD = "password"
 
 
 class DocumentType():
@@ -76,10 +77,14 @@ class Diario(HttpSdk):
         self.authentication_instances += (
             X11PathsAuthentication(self.app_id, self.secret_key),)
 
-    def upload(self, file_path):
+    def upload(self, file_path, password=None):
         file_content = open(file_path, 'rb').read()
         file_name = uuid.uuid4().hex
+        body_params = {}
+        if password:
+            body_params[_Route.PARAM_PASSWORD] = password
         return self.post(url_path=_Route.UPLOAD, files={_Route.PARAM_FILE: (file_name, file_content)},
+                         body_params=body_params,
                          renderers=MultiPartRenderer())
 
     def search(self, document_hash):

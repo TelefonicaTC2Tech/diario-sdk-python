@@ -100,11 +100,13 @@ class DiarioAdmin(diario.Diario):
     def deploy_office_model(self, model, version):
         return self.__deploy_model(DocumentType.OFFICE, model, version)
 
-    def upload(self, file_path, prediction=None):
+    def upload(self, file_path, prediction=None, password=None):
         file_content = open(file_path, 'rb').read()
         file_name = uuid.uuid4().hex
         body_params = {}
         if prediction:
             body_params[_Route.PARAM_PREDICTION] = prediction
+        if password:
+            body_params[_Route.PARAM_PASSWORD] = password
         return self.post(url_path=_Route.UPLOAD, files={_Route.PARAM_FILE: (file_name, file_content)},
                          renderers=MultiPartRenderer(), body_params=body_params)
